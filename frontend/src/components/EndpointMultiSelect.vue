@@ -89,7 +89,7 @@ function clearSelection() {
       <p v-if="error" class="text-sm text-gray-500">{{ error }}</p>
 
       <p v-else-if="!options.length && !loading" class="text-sm text-gray-500">
-        Nenhum IP disponivel.
+        Nenhum endpoint disponivel.
       </p>
 
       <div v-else class="max-h-60 space-y-1 overflow-y-auto">

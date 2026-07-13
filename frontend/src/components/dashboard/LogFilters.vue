@@ -1,5 +1,5 @@
 <script setup>
-import IpMultiSelect from '../EndpointMultiSelect.vue/index.js'
+import EndpointMultiSelect from '../EndpointMultiSelect.vue'
 
 defineProps({
   startDate: {
@@ -92,7 +92,7 @@ const emit = defineEmits([
 
       <div class="min-w-[16rem] xl:w-72">
         <p class="mb-2 text-sm font-medium text-gray-700">Endpoints</p>
-        <IpMultiSelect
+        <EndpointMultiSelect
           :model-value="selectedEndpoints"
           :options="availableEndpoints"
           :loading="isLoadingEndpoints"
