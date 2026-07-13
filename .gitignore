@@ -24,3 +24,17 @@ backend/**/*.pyc
 backend/.pytest_cache/
 backend/.mypy_cache/
 backend/.ruff_cache/
+
+# Frontend artifacts
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/coverage/
+frontend/.vite/
+frontend/.eslintcache
+frontend/*.local
+frontend/*.tsbuildinfo
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
