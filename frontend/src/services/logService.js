@@ -4,6 +4,16 @@ export function getEndpoints() {
   return httpClient('/endpoints')
 }
 
+export function upload(file) {
+  const formData = new FormData()
+  formData.append('file', file)
+
+  return httpClient('/upload-logs', {
+    method: 'POST',
+    body: formData,
+  })
+}
+
 export function getLogs({
   page = 1,
   limit = 20,

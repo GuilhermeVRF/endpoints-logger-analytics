@@ -6,7 +6,7 @@ defineProps({
   },
 })
 
-defineEmits(['logout'])
+defineEmits(['logout', 'open-upload'])
 </script>
 
 <template>
@@ -20,13 +20,23 @@ defineEmits(['logout'])
         </p>
       </div>
 
-      <button
-        type="button"
-        class="rounded-2xl border border-white/30 bg-white px-4 py-2 text-sm text-[#5469bf] transition hover:bg-[#eef1ff]"
-        @click="$emit('logout')"
-      >
-        Sair
-      </button>
+      <div class="flex flex-col gap-3 sm:flex-row">
+        <button
+          type="button"
+          class="rounded-2xl border border-white/30 bg-white px-4 py-2 text-sm font-medium text-[#5469bf] transition hover:bg-[#eef1ff]"
+          @click="$emit('open-upload')"
+        >
+          Ingerir Novos Logs
+        </button>
+
+        <button
+          type="button"
+          class="rounded-2xl border border-white/30 bg-white px-4 py-2 text-sm text-[#5469bf] transition hover:bg-[#eef1ff]"
+          @click="$emit('logout')"
+        >
+          Sair
+        </button>
+      </div>
     </div>
   </header>
 </template>

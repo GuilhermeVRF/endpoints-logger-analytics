@@ -3,6 +3,7 @@ import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { HttpError } from '../api/httpClient'
+import UploadModal from '../components/UploadModal.vue'
 import DashboardHeader from '../components/dashboard/DashboardHeader.vue'
 import LogFilters from '../components/dashboard/LogFilters.vue'
 import LogTable from '../components/dashboard/LogTable.vue'
@@ -25,6 +26,8 @@ const isLoadingEndpoints = ref(false)
 const isLoadingLogs = ref(false)
 const endpointsError = ref('')
 const logsError = ref('')
+const isUploadModalOpen = ref(false)
+const uploadSuccessMessage = ref('')
 
 const hasNextPage = computed(() => logs.value.length === PAGE_LIMIT)
 const hasActiveFilters = computed(
@@ -98,6 +101,11 @@ function clearFilters() {
   fetchLogs()
 }
 
+function openUploadModal() {
+  uploadSuccessMessage.value = ''
+  isUploadModalOpen.value = true
+}
+
 function goToPreviousPage() {
   if (currentPage.value === 1 || isLoadingLogs.value) {
     return
@@ -128,6 +136,13 @@ function logout() {
   router.push({ name: 'login' })
 }
 
+async function handleUploadSuccess(response) {
+  uploadSuccessMessage.value = response.message || 'Logs ingeridos com sucesso.'
+  currentPage.value = 1
+  await fetchEndpoints()
+  await fetchLogs()
+}
+
 onMounted(async () => {
   await fetchEndpoints()
   await fetchLogs()
@@ -137,9 +152,20 @@ onMounted(async () => {
 <template>
   <main class="min-h-screen bg-white">
     <section class="w-full space-y-8">
-      <DashboardHeader :username="authStore.username" @logout="logout" />
+      <DashboardHeader
+        :username="authStore.username"
+        @logout="logout"
+        @open-upload="openUploadModal"
+      />
 
       <div class="mx-auto w-full max-w-7xl space-y-6 px-4 pb-8 sm:px-6 lg:px-8">
+        <p
+          v-if="uploadSuccessMessage"
+          class="rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm text-emerald-700"
+        >
+          {{ uploadSuccessMessage }}
+        </p>
+
         <LogFilters
           :start-date="startDate"
           :end-date="endDate"
@@ -169,6 +195,11 @@ onMounted(async () => {
           @next-page="goToNextPage"
         />
       </div>
+
+      <UploadModal
+        v-model:is-open="isUploadModalOpen"
+        @upload-success="handleUploadSuccess"
+      />
     </section>
   </main>
 </template>
